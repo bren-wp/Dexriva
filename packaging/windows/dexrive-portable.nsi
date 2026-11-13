@@ -9,8 +9,8 @@
   !error "ICONROOT missing"
 !endif
 
-Name "DEXRIVE Portable 1.3.0"
-OutFile "${OUTDIR}\DEXRIVE-1.3.0-portable.exe"
+Name "DEXRIVE Portable 1.4.0"
+OutFile "${OUTDIR}\DEXRIVE-1.4.0-portable.exe"
 Unicode true
 RequestExecutionLevel user
 SetCompressor /SOLID lzma
