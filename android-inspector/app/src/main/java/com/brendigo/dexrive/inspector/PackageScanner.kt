@@ -32,6 +32,7 @@ object PackageScanner {
         return if (cleaned.isNullOrEmpty()) "Android package" else cleaned
     }
     internal suspend fun inspect(context: Context, uri: Uri): PackageReport {
+        val inspectionContext = currentCoroutineContext()
         val name = sanitizeDisplayName(runCatching {
             context.contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)?.use {
                 if (it.moveToFirst()) it.getString(0) else null
@@ -46,7 +47,7 @@ object PackageScanner {
                 tmp.outputStream().use { output ->
                     val buf = ByteArray(65536)
                     while (true) {
-                        currentCoroutineContext().ensureActive()
+                        inspectionContext.ensureActive()
                         val read = input.read(buf)
                         if (read < 0) break
                         if (read == 0) continue
