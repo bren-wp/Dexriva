@@ -77,6 +77,9 @@ public final class DexriveInspector {
         JTextArea report = new JTextArea("Choose an APK, AAB, APKS, APKM, XAPK or ZIP to inspect.\n"
                 + "ZIP metadata is read locally and no files are extracted or uploaded.");
         report.setEditable(false);
+        report.getAccessibleContext().setAccessibleName("DEXRIVE archive inspection report");
+        report.getAccessibleContext().setAccessibleDescription(
+                "Read-only ZIP metadata, heuristic warnings and package inspection limitations.");
         report.setLineWrap(true);
         report.setWrapStyleWord(true);
         report.setBackground(PANEL);
@@ -88,6 +91,7 @@ public final class DexriveInspector {
         content.add(scroll, BorderLayout.CENTER);
 
         JButton choose = new JButton("Open package");
+        choose.getAccessibleContext().setAccessibleDescription("Choose a local Android package or ZIP archive.");
         JButton copy = new JButton("Copy report");
         copy.setEnabled(false);
         JButton close = new JButton("Close");
@@ -223,7 +227,8 @@ public final class DexriveInspector {
                         && (lower.endsWith(".rsa") || lower.endsWith(".dsa") || lower.endsWith(".ec"))) {
                     v1SignatureFile = true;
                 }
-                if (entryName.startsWith("/") || entryName.matches("^[a-zA-Z]:/.*")) {
+                if (entryName.startsWith("/") || entryName.matches("^[a-zA-Z]:.*")
+                        || entryName.indexOf('\0') >= 0) {
                     pathTraversalNames++;
                 } else {
                     for (String part : entryName.split("/")) {
