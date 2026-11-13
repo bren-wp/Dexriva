@@ -13,8 +13,8 @@
   !error "BRANDROOT missing"
 !endif
 
-Name "DEXRIVE 1.3.0"
-OutFile "${OUTDIR}\DEXRIVE-1.3.0-setup.exe"
+Name "DEXRIVE 1.4.0"
+OutFile "${OUTDIR}\DEXRIVE-1.4.0-setup.exe"
 Unicode true
 RequestExecutionLevel user
 InstallDir "$LOCALAPPDATA\Programs\DEXRIVE"
@@ -67,8 +67,8 @@ Section "DEXRIVE application (required)" SecCore
 
   ; Program and uninstall metadata only; no unrelated system settings.
   WriteRegStr HKCU "Software\DEXRIVE" "InstallDir" "$INSTDIR"
-  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\DEXRIVE" "DisplayName" "DEXRIVE 1.3.0"
-  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\DEXRIVE" "DisplayVersion" "1.3.0"
+  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\DEXRIVE" "DisplayName" "DEXRIVE 1.4.0"
+  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\DEXRIVE" "DisplayVersion" "1.4.0"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\DEXRIVE" "Publisher" "Brendigo"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\DEXRIVE" "DisplayIcon" "$INSTDIR\DEXRIVE.exe"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\DEXRIVE" "InstallLocation" "$INSTDIR"

@@ -13,7 +13,7 @@
 
 **By Brendigo.** DEXRIVE brings package inspection, decompilation and code exploration into a cohesive, local-first desktop workspace, with a lightweight Android companion for inspecting archive metadata directly on your device.
 
-**Published downloads:** [GitHub Releases](https://github.com/bren-wp/DEXRIVA/releases) · **This source update:** DEXRIVE 1.3.0 for Windows and Android Inspector 0.4.0. Refer to the Releases page to verify which versions are available. The Android Inspector is a companion app, **not** the full desktop decompiler.
+**Published downloads:** [GitHub Releases](https://github.com/bren-wp/DEXRIVA/releases) · **Latest release series:** DEXRIVE 1.4.0 for Windows and Android Inspector 0.5.0. Refer to the Releases page to verify which versions are available. The Android Inspector is a companion app, **not** the full desktop decompiler.
 
 ## See the actual applications
 
@@ -27,7 +27,7 @@
 
 ![Real DEXRIVE Inspector home screen captured on Android emulator](docs/screenshots/android-inspector-home.png)
 
-*Both images come from compiled, launched applications. These are not illustrations or design mockups; the Android screenshot shows the home screen without a selected APK.*
+*Both images are genuine captures from running DEXRIVE v1.3.0 applications, not design mockups. The Android image shows the home screen without a selected APK; v1.4.0 adds inspection metrics, so its populated report screen may differ.*
 
 <!-- END DEXRIVE SCREENSHOTS -->
 
@@ -43,7 +43,7 @@ The desktop decompilation engine derives from the open-source JADX project. The 
 
 **Windows desktop.** Open a package or previous project from the start screen, explore classes and resources in a tabbed code workspace, and use the built-in APK Inspector to check archive metadata before deeper analysis.
 
-**Android companion.** Open a document through the Android system picker. Review entry counts, DEX/native-library statistics and archive warnings in accessible cards, then copy the SHA-256 digest for reference. The app processes files locally and temporarily caches the selected archive; it does not send files to a remote service. Inspection is limited to archive metadata and **does not** validate APK signatures or detect malware.
+**Android companion.** Open a document through the Android system picker. Review entry counts, DEX/native-library statistics, resource tables, legacy signature-file indicators, compressed-size metadata and archive warnings in accessible cards, then copy the SHA-256 digest for reference. The app processes files locally and temporarily caches the selected archive; it does not send files to a remote service. Inspection is limited to archive metadata and **does not** validate APK signatures or detect malware.
 
 **Automation.** Run `dexrive --help` or `dexrive -d output app.apk`. DEXRIVE-branded environment variables such as `DEXRIVE_CACHE_DIR` and `DEXRIVE_CONFIG_DIR` are supported, while inherited `JADX_*` aliases remain for interoperability.
 
@@ -51,10 +51,10 @@ The desktop decompilation engine derives from the open-source JADX project. The 
 
 | Platform | Build | What to expect |
 | --- | --- | --- |
-| **Windows 10/11** | `DEXRIVE-1.3.0-setup.exe` | Branded installer, per-user setup, shortcuts, uninstall support and bundled Java runtime |
-| **Windows 10/11** | `DEXRIVE-1.3.0-portable.exe` | Self-extracting standalone distribution; first run requires a writable folder |
-| **Android 7.0+** | `DEXRIVE-APK-Inspector-0.4.0-debug.apk` | Debug-key-signed APK for testing, not a production Play Store build |
-| **Android 7.0+** | `DEXRIVE-APK-Inspector-0.4.0-unsigned.aab` | Unsigned release bundle; **requires the legitimate app signing key** for Google Play |
+| **Windows 10/11** | `DEXRIVE-1.4.0-setup.exe` | Branded installer, per-user setup, shortcuts, uninstall support and bundled Java runtime |
+| **Windows 10/11** | `DEXRIVE-1.4.0-portable.exe` | Self-extracting standalone distribution; first run requires a writable folder |
+| **Android 7.0+** | `DEXRIVE-APK-Inspector-0.5.0-debug.apk` | Debug-key-signed APK for testing, not a production Play Store build |
+| **Android 7.0+** | `DEXRIVE-APK-Inspector-0.5.0-unsigned.aab` | Unsigned release bundle; **requires the legitimate app signing key** for Google Play |
 
 **Availability and integrity:** Check [GitHub Releases](https://github.com/bren-wp/DEXRIVA/releases) for published binaries and SHA-256 checksums. Windows installers currently lack an Authenticode signature. Android debug APKs are test builds and unsigned AABs require the owner's legitimate production upload key.
 
@@ -82,6 +82,8 @@ Concept art shows visual direction only; the screenshot gallery above is capture
 **Releases and trust.** CI runs code tests, Windows installer/portable smoke tests and Android APK/AAB builds. UI screenshots have a separate workflow and are not accepted if capture fails. A production Android AAB needs the app owner's signing credentials; a debug APK is **never** a production-signed release.
 
 ## Privacy, security and compatibility
+
+The [offline Inspector security model](docs/INSPECTOR_SECURITY.md) documents controls, limits and remaining checks; it is not a security certification.
 
 Archive inputs are untrusted. DEXRIVE's inspector reads ZIP metadata without extracting or executing archive entries; heuristic flags are not malware diagnoses. For suspicious files, use an isolated environment. The decompiler cannot guarantee recreation of original source code.
 

@@ -60,6 +60,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import java.util.Locale
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -293,11 +294,17 @@ private fun ReportCard(item: PackageReport, onCopyHash: () -> Unit) {
             BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
                 val metrics = listOf(
                     "ZIP entries" to item.entries.toString(),
+                    "Archive size" to readableBytes(item.archiveBytes),
                     "DEX files" to item.dex.toString(),
                     "Native libraries" to item.native.toString(),
                     "Manifest" to (if (item.manifest) "Found" else "Not found"),
+                    "resources.arsc" to (if (item.resources) "Found" else "Absent"),
+                    "Legacy signature files" to (if (item.legacySignatureFiles) "Found" else "Absent"),
+                    "Known unpacked" to readableBytes(item.knownUncompressedBytes),
+                    "Known compressed" to readableBytes(item.knownCompressedBytes),
                     "Traversal-like paths" to item.traversal.toString(),
-                    "High compression" to item.highCompression.toString()
+                    "High compression" to item.highCompression.toString(),
+                    "Over 512 MiB" to item.largeEntries.toString()
                 )
                 val columns = if (maxWidth < 520.dp) 2 else 3
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -315,7 +322,7 @@ private fun ReportCard(item: PackageReport, onCopyHash: () -> Unit) {
             if (item.truncated) {
                 Text("Entry limit reached. Results are partial.", color = Brand.warning)
             }
-            if (item.traversal > 0 || item.highCompression > 0) {
+            if (item.traversal > 0 || item.highCompression > 0 || item.largeEntries > 0) {
                 Text("Heuristic flags are not evidence of malware.", color = Brand.warning,
                     style = MaterialTheme.typography.bodySmall)
             }
@@ -348,4 +355,17 @@ private fun StatTile(label: String, value: String, modifier: Modifier = Modifier
         Text(label, fontSize = 11.sp, color = Brand.muted,
             maxLines = 2, lineHeight = 14.sp)
     }
+}
+
+/** Display-only formatting. Byte counts remain exact in [PackageReport]. */
+private fun readableBytes(bytes: Long): String {
+    if (bytes < 1024L) return "$bytes B"
+    val units = arrayOf("KiB", "MiB", "GiB", "TiB")
+    var value = bytes.toDouble()
+    var unit = -1
+    do {
+        value /= 1024.0
+        unit++
+    } while (value >= 1024.0 && unit < units.lastIndex)
+    return "%.1f %s".format(Locale.ROOT, value, units[unit])
 }
