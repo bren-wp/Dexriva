@@ -58,7 +58,7 @@ object PackageScanner {
                     }
                 }
             }
-            val stat = inspectZip(tmp) { currentCoroutineContext().ensureActive() }
+            val stat = inspectZip(tmp) { inspectionContext.ensureActive() }
             return PackageReport(
                 name, stat.entries, stat.dex, stat.native, stat.manifest,
                 stat.traversal, stat.highCompression, stat.truncated,
