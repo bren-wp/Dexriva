@@ -86,14 +86,14 @@ class BrandIntegrationTest(unittest.TestCase):
         self.assertIn("testDebugUnitTest :app:assembleDebug :app:bundleRelease", workflow)
         self.assertIn("SHA256SUMS.txt", workflow)
 
-    def test_1_3_release_and_real_screen_capture_pipeline(self):
+    def test_1_4_release_and_real_screen_capture_pipeline(self):
         release = (ROOT / ".github/workflows/windows-release.yml").read_text(encoding="utf-8")
         capture = (ROOT / ".github/workflows/capture-ui.yml").read_text(encoding="utf-8")
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         desktop = (ROOT / "dexrive-gui/build.gradle.kts").read_text(encoding="utf-8")
         android = (ROOT / "android-inspector/app/build.gradle.kts").read_text(encoding="utf-8")
         self.assertIn('version.set("1.4.0")', desktop)
-        self.assertIn('versionCode = 4', android)
+        self.assertIn('versionCode = 5', android)
         self.assertIn('versionName = "0.5.0"', android)
         self.assertIn('gh release create v1.4.0', release)
         self.assertIn('reactivecircus/android-emulator-runner@v2', capture)
